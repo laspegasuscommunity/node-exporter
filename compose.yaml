@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  #Это конфигурация Docker Compose для запуска подсистемы сбора метрик с хост машины.
+  node-exporter:
+    container_name: node-exporter
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    image: prom/node-exporter:latest
+    volumes:
+      - "/:/host:ro,rslave"
+    expose:
+      - 9100
+
+networks:
+  default:
+    external: true
+    name: $NETWORK
